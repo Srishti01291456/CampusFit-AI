@@ -35,6 +35,22 @@ def init_db():
     )''')
     db.commit()
 
+@app.get('/api/rewards')
+def rewards():
+    db=get_db()
+    activity=float(db.execute("SELECT COALESCE(SUM(value),0) FROM logs WHERE kind='activity'").fetchone()[0])
+    water=float(db.execute("SELECT COALESCE(SUM(value),0) FROM logs WHERE kind='water'").fetchone()[0])
+    moods=int(db.execute("SELECT COUNT(*) FROM logs WHERE kind='mood'").fetchone()[0])
+    stories=int(db.execute("SELECT COUNT(*) FROM stories").fetchone()[0])
+    points=int(activity*2 + water//250 + stories*5)
+    badges=[]
+    if activity>=30: badges.append({'icon':'🏃','name':'Movement Starter','detail':'Logged 30 activity minutes'})
+    if water>=1000: badges.append({'icon':'💧','name':'Hydration Habit','detail':'Logged 1,000 ml of water'})
+    if stories>=1: badges.append({'icon':'🌱','name':'First Small Win','detail':'Saved your first story'})
+    if moods>=5: badges.append({'icon':'💚','name':'Mindful Check-ins','detail':'Completed 5 mood check-ins'})
+    if not badges: badges.append({'icon':'✨','name':'Your first reward is waiting','detail':'Log activity, water or a story to unlock a badge'})
+    return jsonify({'points':points,'activity_minutes':activity,'water_ml':water,'stories':stories,'mood_checkins':moods,'badges':badges})
+
 def get_models():
     general = joblib.load(MODELS/'general_fitness.joblib') if (MODELS/'general_fitness.joblib').exists() else None
     inclusive = joblib.load(MODELS/'inclusive_activity.joblib') if (MODELS/'inclusive_activity.joblib').exists() else None
@@ -50,7 +66,10 @@ def summary():
     totals={r['kind']:r['total'] or 0 for r in rows}
     history=db.execute("SELECT date(created_at,'localtime') day, SUM(CASE WHEN kind='activity' THEN value ELSE 0 END) activity, SUM(CASE WHEN kind='water' THEN value ELSE 0 END) water, AVG(CASE WHEN kind='mood' THEN value END) mood FROM logs GROUP BY date(created_at,'localtime') ORDER BY day DESC LIMIT 7").fetchall()
     fav=[r['exercise'] for r in db.execute('SELECT exercise FROM favorites').fetchall()]
-    return jsonify({'today':totals,'history':[dict(x) for x in reversed(history)],'favorites':fav,'points':int((totals.get('activity',0) or 0)*2+(totals.get('water',0) or 0))})
+    points_today=int((totals.get('activity',0) or 0)*2 + (totals.get('water',0) or 0)//250*1)
+    story_count=db.execute("SELECT COUNT(*) FROM stories").fetchone()[0]
+    points_lifetime=int(db.execute("SELECT COALESCE(SUM(CASE WHEN kind='activity' THEN value*2 WHEN kind='water' THEN value/250 ELSE 0 END),0) FROM logs").fetchone()[0]) + story_count*5
+    return jsonify({'today':totals,'history':[dict(x) for x in reversed(history)],'favorites':fav,'points':points_today,'lifetime_points':points_lifetime,'stories':story_count})
 
 @app.post('/api/log')
 def log_entry():

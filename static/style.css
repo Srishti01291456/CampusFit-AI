@@ -53,27 +53,22 @@
 @media(max-width:900px){.sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px);padding:25px 3%}.helpline-grid{grid-template-columns:1fr}}
 @media(max-width:650px){.shell{display:block}.sidebar{position:relative;width:100%;height:auto;padding:13px;inset:auto}.brand{padding:0 7px 12px}.sidebar nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.sidebar .nav{min-height:40px;padding:10px;font-size:12px}.side-bottom{display:none}.main{margin:0;width:100%;padding:22px 15px}.choice-grid,.nutrition-grid,.path-grid{grid-template-columns:1fr}.helpline-card{grid-template-columns:36px minmax(0,1fr)}.helpline-card .btn{grid-column:2;justify-self:start}.contact-panel{min-width:0}}
 
-
-/* Mind games: additive styles, preserving the existing CampusFit theme. */
-.mind-games-section{margin-top:22px}
-.mind-games-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
-.mind-games-heading h3{margin:8px 0 5px}
-.mind-games-mark{font-size:2rem;color:var(--primary,#6c63d9)}
-.mind-games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.mind-game-card{min-width:0;border:1px solid var(--line,#e6e8ef);border-radius:16px;background:var(--surface,#fff);padding:16px}
-.mind-game-icon{font-size:1.8rem;margin-bottom:8px}
-.mind-game-card h4{margin:0 0 6px}
-.mind-game-card>p{font-size:.9rem;color:var(--muted,#687386);min-height:42px}
-.game-stage{margin-top:12px;border-top:1px solid var(--line,#e6e8ef);padding-top:12px}
-.game-instruction{font-size:.86rem;color:var(--muted,#687386);margin:0 0 10px}
-.game-actions,.game-choice-row,.colour-options{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.sequence-display,.word-display,.colour-prompt,.coord-prompt{min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;background:var(--soft,#f4f5fb);padding:10px;margin:10px 0;font-weight:700}
-.sequence-display{flex-direction:column;gap:5px}.sequence-dot{width:22px;height:22px;border-radius:50%;display:inline-block}.sequence-dot.red{background:#e87979}.sequence-dot.yellow{background:#e8b94f}.sequence-dot.green{background:#65b98b}.sequence-dot.blue{background:#739be8}
-.game-choice{width:42px;height:42px;border:0;border-radius:50%;background:var(--game-color);color:#fff;font-size:1.4rem;cursor:pointer}.game-choice:focus-visible,.tap-target:focus-visible,.colour-option:focus-visible{outline:3px solid #252a48;outline-offset:3px}
-.game-result{font-size:.86rem;font-weight:600;color:var(--primary,#5c55b8);min-height:22px;margin:10px 0}
-.word-answer{display:flex;gap:7px;flex-wrap:wrap}.word-answer input{flex:1;min-width:130px}.colour-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.colour-option{border:0;border-radius:9px;padding:9px;color:#fff;font-weight:700;cursor:pointer}.colour-option.red{background:#d96b6b}.colour-option.yellow{background:#bd8a16}.colour-option.green{background:#398d62}.colour-option.blue{background:#477ac7}
-.tap-target-wrap{display:flex;justify-content:center;padding:8px}.tap-target{width:74px;height:74px;border:0;border-radius:50%;background:#6c63d9;color:#fff;font-size:2rem;cursor:pointer}.tap-target:disabled{opacity:.45;cursor:not-allowed}
-.bingo-grid{display:grid;grid-template-columns:1fr;gap:8px}.bingo-item{display:flex;align-items:flex-start;gap:9px;padding:9px;border:1px solid var(--line,#e6e8ef);border-radius:10px;font-size:.86rem}.bingo-item input{margin-top:3px;accent-color:#6c63d9}.coord-prompt{font-size:2rem;min-height:68px}
-.mind-games-note{font-size:.8rem;color:var(--muted,#687386);margin:16px 0 0}
-@media(max-width:950px){.mind-games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.mind-games-grid{grid-template-columns:1fr}.mind-game-card>p{min-height:0}}
+/* Rewards and live food camera */
+.camera-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);gap:22px;align-items:start}
+.camera-actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.camera-view{position:relative;min-height:245px;border:1px solid var(--line);border-radius:14px;background:#152a38;overflow:hidden;display:grid;place-items:center}
+.camera-view video{display:block;width:100%;height:100%;min-height:245px;max-height:360px;object-fit:cover}
+.camera-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;color:#d9e6ee;font-size:34px;background:linear-gradient(135deg,#203d50,#365c6b)}
+.camera-placeholder span{font:12px 'DM Sans';color:#d9e6ee}
+.camera-copy input[type=file]{display:block;margin:12px 0}
+.db-note{display:block;margin-top:12px}
+.reward-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:15px 0}
+.badge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.badge-card{display:flex;align-items:center;gap:13px;border:1px solid var(--line);background:#fbfcfd;border-radius:13px;padding:14px}
+.badge-card>span{width:45px;height:45px;border-radius:13px;background:#f5f2fc;display:grid;place-items:center;font-size:24px;flex:0 0 auto}
+.badge-card b,.badge-card small{display:block}
+.badge-card b{font:700 12px Manrope}
+.badge-card small{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+@media(max-width:850px){.camera-panel{grid-template-columns:1fr}.reward-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.badge-grid{grid-template-columns:1fr}.camera-actions .btn{flex:1}}
